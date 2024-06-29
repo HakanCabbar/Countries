@@ -4,55 +4,68 @@ import { useTheme as useMuiTheme } from '@mui/material/styles'
 import Icon from 'src/icon'
 import { useTheme } from 'src/context/themeContext'
 
-const CountryCard = () => {
+interface CountryCardProps {
+  cardData: {
+    countryName: string
+    population: number
+    region: string
+    capital: string
+    language: string
+    flagUrl: string
+  }
+}
+
+const CountryCard = ({ cardData }: CountryCardProps) => {
   const theme = useMuiTheme()
   const { mode } = useTheme()
 
-  const cardData = [
-    {
-      icon: 'mdi:users-outline',
-      text: 'Population',
-      data: 25
-    },
-    {
-      icon: 'mdi:map-outline',
-      text: 'Region',
-      data: 50
-    },
-    {
-      icon: 'mdi:city-variant-outline',
-      text: 'Capital',
-      data: 50
-    },
-    {
-      icon: 'mdi:language',
-      text: 'Language',
-      data: 50
-    }
+  const { countryName, population, region, capital, language, flagUrl } = cardData
+
+  const cardDataList = [
+    { icon: 'mdi:users-outline', text: 'Population', data: population },
+    { icon: 'mdi:map-outline', text: 'Region', data: region },
+    { icon: 'mdi:city-variant-outline', text: 'Capital', data: capital },
+    { icon: 'mdi:language', text: 'Language', data: language }
   ]
 
   return (
-    <Card sx={{ borderColor: theme.palette.text.secondary, borderRadius: '8px', border: '1px', width: '20%' }}>
+    <Card
+      sx={{
+        borderColor: theme.palette.text.secondary,
+        borderRadius: '8px',
+        border: '1px solid',
+        width: 'calc(25% - 1rem)',
+        boxSizing: 'border-box',
+        cursor: 'pointer',
+        transition: 'box-shadow 0.3s ease-in-out',
+        ':hover': {
+          boxShadow: `4px 4px 20px ${theme.palette.text.secondary}`
+        }
+      }}
+    >
+      <Box sx={{ height: '180px' }}>
+        <img src={flagUrl} alt={`${countryName} flag`} style={{ width: '100%', height: '180px', objectFit: 'cover' }} />
+      </Box>
       <Box
         sx={{
-          borderBottom: ` 1px solid ${theme.palette.text.secondary}`,
+          borderBlock: `1px solid ${theme.palette.text.secondary}`,
           padding: '1rem',
           fontWeight: 700,
           fontSize: '24px'
         }}
       >
-        Netherlands
+        {countryName}
       </Box>
-      {cardData.map((data, index) => (
+      {cardDataList.map((data, index) => (
         <Box
           key={index}
           sx={{ paddingX: '1rem', paddingY: '0.5rem', display: 'flex', justifyContent: 'space-between' }}
         >
           <Box sx={{ display: 'flex', gap: '1rem' }}>
-            <Icon icon={data.icon} fontSize={20} color={theme.palette.text.secondary} />
-            <Typography color={theme.palette.text.secondary}>{data.text}</Typography>
+            <Icon icon={data.icon} fontSize={20} color={mode === 'light' ? '#777777' : '#C5C5C5'} />
+            <Typography color={mode === 'light' ? '#777777' : '#C5C5C5'}>{data.text}</Typography>
           </Box>
-          <Box>{data.data}</Box>
+          <Box sx={{ fontSize: '16px', fontWeight: 700 }}>{data.data}</Box>
         </Box>
       ))}
     </Card>
