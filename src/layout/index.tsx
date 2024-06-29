@@ -18,7 +18,7 @@ const Layout = ({ Component, pageProps }: MyAppProps) => {
       }}
     >
       <AppBar />
-      <Box sx={{ minHeight: '100vh', width: '75%', margin: 'auto', padding: 2 }}>
+      <Box sx={{ minHeight: '100vh', width: '80%', margin: 'auto', paddingY:6 }}>
         <Component {...pageProps} />
       </Box>
 
