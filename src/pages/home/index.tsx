@@ -6,36 +6,52 @@ import Autocomplete from '@mui/material/Autocomplete'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import useGetCountriesByRegion from 'src/services/hooks/useGetCountriesByRegion'
+import useGetCountriesWithFilter from 'src/services/hooks/useGetCountriesByRegion'
 
 const Home = () => {
   // ** States
-  const [region, setRegion] = useState('none')
+  const [countryRegion, setCountryRegion] = useState('none')
+  const [countryName, setCountryName] = useState<string | null>(null)
 
   const { data: countriesData, isLoading: countriesLoading } = useGetCountries()
 
-  const { data: regionCountriesData } = useGetCountriesByRegion(region)
+  const { data: regionCountriesData } = useGetCountriesWithFilter({
+    filterKey: countryName !== null ? 'name' : 'region',
+    filterValue: countryName !== null ? countryName : countryRegion
+  })
 
-  const manipulatedCountryData = (region !=='none' ? regionCountriesData : countriesData)?.map(country => ({
-    countryName: country.name.common,
-    population: country.population,
-    region: country.region,
-    capital: country.capital[0],
-    language: Object.values(country.languages)[0],
-    flagUrl: country.flags.svg
-  }))
+  const sortedCountryNames = countriesData?.map(country => country.name.common).sort()
 
-  console.log(regionCountriesData)
+  const manipulatedCountryData = (
+    countryRegion !== 'none' || countryName !== null ? regionCountriesData : countriesData
+  )
+    ?.map(country => ({
+      countryName: country.name.common,
+      population: country.population,
+      region: country.region,
+      capital: country.capital[0],
+      language: Object.values(country.languages)[0],
+      flagUrl: country.flags.svg
+    }))
+    .sort((a, b) => a.countryName.localeCompare(b.countryName))
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <Box sx={{ display: 'flex', gap: '2rem', paddingRight: '1rem' }}>
         <Autocomplete
           disablePortal
-          options={countriesData?.map(country => country.name.common) as string[]}
+          options={sortedCountryNames as string[]}
+          onChange={(event, value) => setCountryName(value !== '' ? value : null)}
           sx={{ width: '80%' }}
-          renderInput={params => <TextField {...params} label='Search by Country Name' />}
+          renderInput={params => (
+            <TextField
+              onChange={e => setCountryName(e.target.value !== '' ? e.target.value : null)}
+              {...params}
+              label='Search by Country Name'
+            />
+          )}
         />
-        <Select value={region} sx={{ width: '20%' }} onChange={e => setRegion(e.target.value)}>
+        <Select value={countryRegion} sx={{ width: '20%' }} onChange={e => setCountryRegion(e.target.value)}>
           <MenuItem value='none'>None</MenuItem>
           <MenuItem value={'Africa'}>Africa</MenuItem>
           <MenuItem value={'America'}>America</MenuItem>
