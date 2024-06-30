@@ -15,7 +15,7 @@ const App = ({ Component, pageProps }: MyAppProps) => {
 
   return (
     <SWRConfig value={swrDefaultValues}>
-      <ThemeProvider initialMode={'light'}>
+      <ThemeProvider>
         <Layout Component={Component} pageProps={pageProps} />
       </ThemeProvider>
     </SWRConfig>

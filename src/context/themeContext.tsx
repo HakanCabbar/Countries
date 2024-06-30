@@ -11,8 +11,8 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
-export const ThemeProvider = ({ children, initialMode }: { children: ReactNode; initialMode: Theme }) => {
-  const [mode, setMode] = useState<Theme>(initialMode)
+export const ThemeProvider = ({ children }: { children: ReactNode }) => {
+  const [mode, setMode] = useState<Theme>('light')
 
   const toggleMode = () => {
     setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'))
