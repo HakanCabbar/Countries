@@ -1,4 +1,4 @@
-import { Box, Card, Typography } from '@mui/material'
+import { Box, Card, Typography, useMediaQuery } from '@mui/material'
 import React from 'react'
 import { useTheme as useMuiTheme } from '@mui/material/styles'
 import Icon from 'src/icon'
@@ -18,8 +18,10 @@ interface CountryCardProps {
 
 const CountryCard = ({ cardData, onClick }: CountryCardProps) => {
   const theme = useMuiTheme()
-  const { mode } = useTheme()
 
+  const { mode } = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
   const { countryName, population, region, capital, language, flagUrl } = cardData
 
   const cardDataList = [
@@ -34,7 +36,7 @@ const CountryCard = ({ cardData, onClick }: CountryCardProps) => {
       sx={{
         borderRadius: '8px',
         border: `1px solid ${theme.palette.text.secondary}`,
-        width: 'calc(25% - 1rem)',
+        width: isSmallScreen ? '100%' : isMediumScreen ? 'calc(50% - 1rem)' : 'calc(25% - 1rem)',
         boxSizing: 'border-box',
         cursor: 'pointer',
         transition: 'box-shadow 0.3s ease-in-out',
@@ -46,7 +48,6 @@ const CountryCard = ({ cardData, onClick }: CountryCardProps) => {
     >
       <Box sx={{ height: '180px' }}>
         {
-          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={flagUrl}
             alt={`${countryName} flag`}
