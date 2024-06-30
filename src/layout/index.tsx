@@ -7,11 +7,8 @@ import Footer from './footer'
 
 // ** Type Imports
 import { MyAppProps } from 'src/pages/_app'
-import { useEffect } from 'react'
-import { useTheme } from 'src/context/themeContext'
 
 const Layout = ({ Component, pageProps }: MyAppProps) => {
-
   return (
     <Box
       sx={{

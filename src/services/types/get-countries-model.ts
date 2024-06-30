@@ -1,5 +1,3 @@
-
-
 export interface CountryData {
   flags: {
     png: string
