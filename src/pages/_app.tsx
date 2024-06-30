@@ -1,6 +1,25 @@
-import "@/styles/globals.css";
-import type { AppProps } from "next/app";
+'use client'
+import '../styles/globals.css'
+import { Theme, ThemeProvider } from 'src/context/themeContext'
+import Layout from 'src/layout'
+import { NextComponentType, NextPageContext } from 'next'
+import { SWRConfig } from 'swr'
+import { swrDefaultValues } from 'src/configs/swr'
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+export interface MyAppProps {
+  Component: NextComponentType<NextPageContext, any, {}>
+  pageProps: any
 }
+
+const App = ({ Component, pageProps }: MyAppProps) => {
+
+  return (
+    <SWRConfig value={swrDefaultValues}>
+      <ThemeProvider>
+        <Layout Component={Component} pageProps={pageProps} />
+      </ThemeProvider>
+    </SWRConfig>
+  )
+}
+
+export default App

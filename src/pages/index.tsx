@@ -1,10 +1,5 @@
-
+import { Card } from "@mui/material";
 
 export default function Home() {
-  return (
-    <>
-     
-     Project Start Point
-    </>
-  );
+  return <Card>Project start point</Card>;
 }
