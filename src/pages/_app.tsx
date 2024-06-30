@@ -1,6 +1,6 @@
+'use client'
 import '../styles/globals.css'
-import { AppProps } from 'next/app'
-import { ThemeProvider } from 'src/context/themeContext'
+import { Theme, ThemeProvider } from 'src/context/themeContext'
 import Layout from 'src/layout'
 import { NextComponentType, NextPageContext } from 'next'
 import { SWRConfig } from 'swr'
@@ -12,6 +12,7 @@ export interface MyAppProps {
 }
 
 const App = ({ Component, pageProps }: MyAppProps) => {
+
   return (
     <SWRConfig value={swrDefaultValues}>
       <ThemeProvider>

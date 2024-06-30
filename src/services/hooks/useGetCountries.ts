@@ -16,5 +16,5 @@ export default function useGetCountries() {
     fetcher
   )
 
-  return { data: data, mutate, isLoading }
+  return { data: data?.slice(0, 100), mutate, isLoading };
 }
