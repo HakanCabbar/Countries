@@ -6,7 +6,6 @@ const CountryDetails = () => {
   return (
     <Box
       sx={{
-        width: '60%',
         display: 'flex',
         flexDirection: 'column',
         marginX: 'auto',
