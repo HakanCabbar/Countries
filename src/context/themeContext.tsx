@@ -28,7 +28,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       text: {
         primary: mode === 'light' ? '#17181A' : '#ffffff',
         secondary: mode === 'light' ? '#C5C5C5' : '#777777'
-      }
+      },
     },
     typography: {
       fontFamily: 'Nunito Sans, sans-serif'

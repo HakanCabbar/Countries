@@ -13,9 +13,10 @@ interface CountryCardProps {
     language: string
     flagUrl: string
   }
+  onClick: () => void
 }
 
-const CountryCard = ({ cardData }: CountryCardProps) => {
+const CountryCard = ({ cardData, onClick }: CountryCardProps) => {
   const theme = useMuiTheme()
   const { mode } = useTheme()
 
@@ -31,9 +32,8 @@ const CountryCard = ({ cardData }: CountryCardProps) => {
   return (
     <Card
       sx={{
-        borderColor: theme.palette.text.secondary,
         borderRadius: '8px',
-        border: '1px solid',
+        border: `1px solid ${theme.palette.text.secondary}`,
         width: 'calc(25% - 1rem)',
         boxSizing: 'border-box',
         cursor: 'pointer',
@@ -42,9 +42,17 @@ const CountryCard = ({ cardData }: CountryCardProps) => {
           boxShadow: `4px 4px 20px ${theme.palette.text.secondary}`
         }
       }}
+      onClick={onClick}
     >
       <Box sx={{ height: '180px' }}>
-        <img src={flagUrl} alt={`${countryName} flag`} style={{ width: '100%', height: '180px', objectFit: 'cover' }} />
+        {
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={flagUrl}
+            alt={`${countryName} flag`}
+            style={{ width: '100%', height: '180px', objectFit: 'cover' }}
+          />
+        }
       </Box>
       <Box
         sx={{
