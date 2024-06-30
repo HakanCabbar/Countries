@@ -1,8 +1,8 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react'
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react'
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 
-type Theme = 'light' | 'dark'
+export type Theme = 'light' | 'dark'
 
 interface ThemeContextType {
   mode: Theme
@@ -11,8 +11,8 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
-export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [mode, setMode] = useState<Theme>('light')
+export const ThemeProvider = ({ children, initialMode }: { children: ReactNode; initialMode: Theme }) => {
+  const [mode, setMode] = useState<Theme>(initialMode)
 
   const toggleMode = () => {
     setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'))
@@ -20,7 +20,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   const muiTheme = createTheme({
     palette: {
-      mode: 'light',
+      mode: mode,
       background: {
         default: mode === 'light' ? '#f0f0f0' : '#202d36',
         paper: mode === 'light' ? '#ffffff' : '#2B3743'

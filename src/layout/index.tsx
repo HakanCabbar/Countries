@@ -7,8 +7,11 @@ import Footer from './footer'
 
 // ** Type Imports
 import { MyAppProps } from 'src/pages/_app'
+import { useEffect } from 'react'
+import { useTheme } from 'src/context/themeContext'
 
 const Layout = ({ Component, pageProps }: MyAppProps) => {
+
   return (
     <Box
       sx={{
@@ -18,7 +21,7 @@ const Layout = ({ Component, pageProps }: MyAppProps) => {
       }}
     >
       <AppBar />
-      <Box sx={{ minHeight: '100vh', width: '80%', margin: 'auto', paddingY:6 }}>
+      <Box sx={{ minHeight: '100vh', width: '80%', margin: 'auto', paddingY: 6 }}>
         <Component {...pageProps} />
       </Box>
 
