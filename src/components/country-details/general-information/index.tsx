@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, useMediaQuery } from '@mui/material'
 import React from 'react'
 import { DetailRow } from '../detail-row'
 import useGetCountryDetails from 'src/services/hooks/useGetCountryDetail'
@@ -13,6 +13,9 @@ const GeneralInformation = () => {
   const router = useRouter()
   const theme = useMuiTheme()
   const { mode } = useTheme()
+
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
 
   const { data: countryData } = useGetCountryDetails({
     filterValue: router.query.countryName as string,
@@ -53,7 +56,7 @@ const GeneralInformation = () => {
   ]
 
   return (
-    <>
+    <Box sx={{width:isMediumScreen? '80%':isSmallScreen?'100%':'60%', margin:'auto'}}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
         <Typography sx={{ fontWeight: 800, fontSize: '36px' }}>{countryData?.name?.common}</Typography>
         <img src={countryData?.flags?.svg} alt={`${countryData?.name?.common} Flag`} height={24} width={36} />
@@ -78,7 +81,7 @@ const GeneralInformation = () => {
           </Box>
         ))}
       </Box>
-    </>
+    </Box>
   )
 }
 
