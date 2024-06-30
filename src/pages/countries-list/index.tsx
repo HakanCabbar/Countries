@@ -1,14 +1,18 @@
-import { Box, TextField, Autocomplete, Select, MenuItem } from '@mui/material'
+import { Box, TextField, Autocomplete, Select, MenuItem, useMediaQuery } from '@mui/material'
 import React, { useState } from 'react'
 import CountryCard from 'src/components/country-card'
 import useGetCountries from 'src/services/hooks/useGetCountries'
 import useGetCountriesWithFilter from 'src/services/hooks/useGetCountriesWithFilter'
 import { useRouter } from 'next/router'
+import { useTheme as useMuiTheme } from '@mui/material/styles'
 
 const CountriesList = () => {
   // ** States
   const [countryRegion, setCountryRegion] = useState('none')
   const [countryName, setCountryName] = useState<string | null>(null)
+  const theme = useMuiTheme()
+
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'))
 
   const { data: countriesData, isLoading: countriesLoading } = useGetCountries()
 
@@ -37,12 +41,12 @@ const CountriesList = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-      <Box sx={{ display: 'flex', gap: '2rem', paddingRight: '1rem' }}>
+      <Box sx={{ display: 'flex', gap: '2rem', paddingRight: '1rem',flexWrap: isMediumScreen?'wrap':'nowrap' }}>
         <Autocomplete
           disablePortal
           options={sortedCountryNames ?? ([] as string[])}
           onChange={(event, value) => setCountryName(value !== '' ? value : null)}
-          sx={{ width: '80%' }}
+          sx={{ width: isMediumScreen ?'100%': '80%' }}
           renderInput={params => (
             <TextField
               onChange={e => setCountryName(e.target.value !== '' ? e.target.value : null)}
@@ -51,7 +55,7 @@ const CountriesList = () => {
             />
           )}
         />
-        <Select value={countryRegion} sx={{ width: '20%' }} onChange={e => setCountryRegion(e.target.value)}>
+        <Select value={countryRegion} sx={{ width: isMediumScreen ?'100%':'20%' }} onChange={e => setCountryRegion(e.target.value)}>
           <MenuItem value='none'>None</MenuItem>
           <MenuItem value='Africa'>Africa</MenuItem>
           <MenuItem value='America'>America</MenuItem>
