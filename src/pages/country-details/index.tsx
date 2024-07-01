@@ -3,6 +3,7 @@ import { Box } from '@mui/material'
 
 // ** Custom Component Imports
 import GeneralInformation from 'src/components/country-details/general-information'
+import Geography from 'src/components/country-details/geography'
 
 const CountryDetails = () => {
   return (
@@ -15,6 +16,7 @@ const CountryDetails = () => {
       }}
     >
       <GeneralInformation />
+      <Geography />
     </Box>
   )
 }

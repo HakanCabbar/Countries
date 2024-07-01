@@ -5,7 +5,7 @@ import { useSettings } from 'src/hooks/useSettings'
 
 interface DetailRowProps {
   label: string
-  value?: string
+  value?: string | number
   children?: ReactNode
   isLastMember: boolean
 }

@@ -14,12 +14,12 @@ export default function useGetCountryDetails(params: FilterParams) {
       params: { fields: params.fields }
     })
 
-    return response.data[0]
+    return response.data
   }
 
   const { data, mutate, isLoading } = useSWR<CountryDetailsData>(
-    params.filterValue ? [baseUrl + `/name/${params.filterValue}`] : null,
-    fetcher
+    params.filterValue ? [baseUrl + `/alpha/${params.filterValue}`, params] : null,
+    ([url]) => fetcher(url)
   )
 
   return { data, mutate, isLoading }

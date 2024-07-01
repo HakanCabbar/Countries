@@ -50,7 +50,7 @@ const AppBar = () => {
             background: 'transparent'
           }}
           component={'div'}
-          onClick={() => Router.push('/countries-list')}
+          onClick={() => Router.push('/country-list')}
         >
           Where is the world
         </Typography>

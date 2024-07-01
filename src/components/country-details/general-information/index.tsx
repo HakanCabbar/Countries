@@ -4,7 +4,7 @@ import { DetailRow } from '../detail-row'
 import useGetCountryDetails from 'src/services/hooks/useGetCountryDetail'
 import Chip from 'src/components/shared/chip'
 import { useTheme } from '@mui/material/styles'
-import router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { useSettings } from 'src/hooks/useSettings'
 
 const GeneralInformation = () => {
@@ -16,40 +16,40 @@ const GeneralInformation = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
 
-  const { data: countryData } = useGetCountryDetails({
-    filterValue: router.query.countryName as string,
+  const { data: generalInformation } = useGetCountryDetails({
+    filterValue: router.query.countryCode as string,
     fields: 'altSpellings,name,capital,population,languages,currencies,flags'
   })
 
   const generalInformationData = [
     {
       label: 'Official name',
-      value: countryData?.name?.official
+      value: generalInformation?.name?.official
     },
     {
       label: 'Common name',
-      value: countryData?.name?.common
+      value: generalInformation?.name?.common
     },
     {
       label: 'Alternative spellings',
-      value: countryData?.altSpellings?.join(', ')
+      value: generalInformation?.altSpellings?.join(', ')
     },
     {
       label: 'Capital',
-      value: countryData?.capital?.join(', ')
+      value: generalInformation?.capital?.join(', ')
     },
     {
       label: 'Population',
-      value: countryData?.population?.toLocaleString()
+      value: generalInformation?.population?.toLocaleString()
     },
     {
       label: 'Language',
-      value: Object.values(countryData?.languages || {}).join(', ')
+      value: Object.values(generalInformation?.languages || {}).join(', ')
     },
     {
       label: 'Currencies',
-      value: Object.keys(countryData?.currencies || {})
-        .map(code => `${countryData?.currencies[code]?.name} (${countryData?.currencies[code]?.symbol})`)
+      value: Object.keys(generalInformation?.currencies || {})
+        .map(code => `${generalInformation?.currencies[code]?.name} (${generalInformation?.currencies[code]?.symbol})`)
         .join(', ')
     }
   ]
@@ -65,8 +65,13 @@ const GeneralInformation = () => {
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-        <Typography sx={{ fontWeight: 800, fontSize: '36px' }}>{countryData?.name?.common}</Typography>
-        <img src={countryData?.flags?.svg} alt={`${countryData?.name?.common} Flag`} height={24} width={36} />
+        <Typography sx={{ fontWeight: 800, fontSize: '36px' }}>{generalInformation?.name?.common}</Typography>
+        <img
+          src={generalInformation?.flags?.svg}
+          alt={`${generalInformation?.name?.common} Flag`}
+          height={24}
+          width={36}
+        />
       </Box>
       <Typography sx={{ fontWeight: 700, fontSize: '24px' }}>General Information</Typography>
       <Box
