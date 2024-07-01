@@ -1,6 +1,6 @@
-/* styles/globals.css */
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap');
 
-html, body {
+html,
+body {
   font-family: 'Nunito Sans', sans-serif;
 }

@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import React, { ReactNode } from 'react'
-import { useTheme } from 'src/context/themeContext'
-import { useTheme as useMuiTheme } from '@mui/material/styles'
+import { useSettings } from 'src/hooks/useSettings'
 
 interface DetailRowProps {
   label: string
@@ -11,8 +11,8 @@ interface DetailRowProps {
 }
 
 export const DetailRow = (props: DetailRowProps) => {
-  const { mode } = useTheme()
-  const theme = useMuiTheme()
+  const { settings } = useSettings()
+  const theme = useTheme()
 
   return (
     <Box
@@ -26,7 +26,7 @@ export const DetailRow = (props: DetailRowProps) => {
       <Typography
         sx={{
           width: '30%',
-          color: mode === 'light' ? '#17181A' : '#FFFFFF',
+          color: settings.mode === 'light' ? '#17181A' : '#FFFFFF',
           fontWeight: 700,
           fontSize: '16px'
         }}
@@ -37,7 +37,7 @@ export const DetailRow = (props: DetailRowProps) => {
         <Typography
           sx={{
             width: '70%',
-            color: mode === 'light' ? '#17181A' : '#FFFFFF',
+            color: settings.mode === 'light' ? '#17181A' : '#FFFFFF',
             fontWeight: 400,
             fontSize: '16px'
           }}
