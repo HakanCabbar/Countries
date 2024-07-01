@@ -1,5 +1,7 @@
-import React from 'react'
+// ** MUI Imports
 import { Box } from '@mui/material'
+
+// ** Custom Component Imports
 import GeneralInformation from 'src/components/country-details/general-information'
 
 const CountryDetails = () => {

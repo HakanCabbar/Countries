@@ -1,18 +1,17 @@
-'use client'
-
 import { Box, Typography, useMediaQuery } from '@mui/material'
 import React from 'react'
 import { DetailRow } from '../detail-row'
 import useGetCountryDetails from 'src/services/hooks/useGetCountryDetail'
 import Chip from 'src/components/shared/chip'
-import { useTheme as useMuiTheme } from '@mui/material/styles'
-import { useTheme } from 'src/context/themeContext'
+import { useTheme } from '@mui/material/styles'
 import router, { useRouter } from 'next/router'
+import { useSettings } from 'src/hooks/useSettings'
 
 const GeneralInformation = () => {
   const router = useRouter()
-  const theme = useMuiTheme()
-  const { mode } = useTheme()
+  const { settings } = useSettings()
+
+  const theme = useTheme()
 
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
@@ -56,7 +55,15 @@ const GeneralInformation = () => {
   ]
 
   return (
-    <Box sx={{width:isMediumScreen? '80%':isSmallScreen?'100%':'60%', margin:'auto'}}>
+    <Box
+      sx={{
+        width: isMediumScreen ? '80%' : isSmallScreen ? '100%' : '60%',
+        margin: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem'
+      }}
+    >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
         <Typography sx={{ fontWeight: 800, fontSize: '36px' }}>{countryData?.name?.common}</Typography>
         <img src={countryData?.flags?.svg} alt={`${countryData?.name?.common} Flag`} height={24} width={36} />
@@ -66,7 +73,7 @@ const GeneralInformation = () => {
         sx={{
           borderRadius: '8px',
           border: `1px solid ${theme.palette.text.secondary}`,
-          bgcolor: mode === 'light' ? '#FFFFFF' : '#2B3743'
+          bgcolor: settings.mode === 'light' ? '#FFFFFF' : '#2B3743'
         }}
       >
         {generalInformationData.map((data, index) => (

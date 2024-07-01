@@ -1,8 +1,11 @@
-import { Box, Card, Typography, useMediaQuery } from '@mui/material'
-import React from 'react'
-import { useTheme as useMuiTheme } from '@mui/material/styles'
-import Icon from 'src/icon'
-import { useTheme } from 'src/context/themeContext'
+// ** MUI Imports
+import { Box, Card, Typography, useMediaQuery, useTheme } from '@mui/material'
+
+// ** Custom Component Imports
+import Icon from '../shared/icon'
+
+// ** Hook Imports
+import { useSettings } from 'src/hooks/useSettings'
 
 interface CountryCardProps {
   cardData: {
@@ -17,9 +20,10 @@ interface CountryCardProps {
 }
 
 const CountryCard = ({ cardData, onClick }: CountryCardProps) => {
-  const theme = useMuiTheme()
+  const { settings, saveSettings } = useSettings()
+  const theme = useTheme()
+  const mode = settings.mode
 
-  const { mode } = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
   const { countryName, population, region, capital, language, flagUrl } = cardData
