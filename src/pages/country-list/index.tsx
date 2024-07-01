@@ -9,11 +9,11 @@ import { Box, TextField, Autocomplete, Select, MenuItem, useMediaQuery } from '@
 import { useTheme } from '@mui/material/styles'
 
 // ** Custom Component Imports
-import CountryCard from 'src/components/country-card'
 
 // ** Hook Imports
 import useGetCountries from 'src/services/hooks/useGetCountries'
 import useGetCountriesWithFilter from 'src/services/hooks/useGetCountriesWithFilter'
+import CountryCard from 'src/components/country-list/country-card'
 
 const CountriesList = () => {
   // ** States
@@ -28,7 +28,7 @@ const CountriesList = () => {
   const { data: regionCountriesData } = useGetCountriesWithFilter({
     filterKey: countryName !== null ? 'name' : 'region',
     filterValue: countryName !== null ? countryName : countryRegion,
-    fields: 'name,population,region,capital,languages,flags'
+    fields: 'name,population,region,capital,languages,flags,code'
   })
 
   const sortedCountryNames = countriesData?.map(country => country.name.common).sort()
@@ -42,11 +42,13 @@ const CountriesList = () => {
       region: country.region,
       capital: country.capital ? country?.capital[0] : '',
       language: country.languages ? Object.values(country.languages)[0] : '',
-      flagUrl: country.flags.svg
+      flagUrl: country.flags.svg,
+      code:country.cca2
     }))
     .sort((a, b) => a.countryName.localeCompare(b.countryName))
 
   const router = useRouter()
+
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -82,7 +84,7 @@ const CountriesList = () => {
           <CountryCard
             key={country.countryName}
             cardData={country}
-            onClick={() => router.push(`/country-details?countryName=${country.countryName}`)}
+            onClick={() => router.push(`/country-details?countryCode=${country.code}`)}
           />
         ))}
       </Box>

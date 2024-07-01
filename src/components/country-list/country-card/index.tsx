@@ -2,7 +2,7 @@
 import { Box, Card, Typography, useMediaQuery, useTheme } from '@mui/material'
 
 // ** Custom Component Imports
-import Icon from '../shared/icon'
+import Icon from 'src/components/shared/icon'
 
 // ** Hook Imports
 import { useSettings } from 'src/hooks/useSettings'
