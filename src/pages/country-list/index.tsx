@@ -9,11 +9,11 @@ import { Box, TextField, Autocomplete, Select, MenuItem, useMediaQuery } from '@
 import { useTheme } from '@mui/material/styles'
 
 // ** Custom Component Imports
+import CountryCard from 'src/components/country-list/country-card'
 
 // ** Hook Imports
 import useGetCountries from 'src/services/hooks/useGetCountries'
 import useGetCountriesWithFilter from 'src/services/hooks/useGetCountriesWithFilter'
-import CountryCard from 'src/components/country-list/country-card'
 
 const CountriesList = () => {
   // ** States
@@ -43,12 +43,11 @@ const CountriesList = () => {
       capital: country.capital ? country?.capital[0] : '',
       language: country.languages ? Object.values(country.languages)[0] : '',
       flagUrl: country.flags.svg,
-      code:country.cca2
+      code: country.cca2
     }))
     .sort((a, b) => a.countryName.localeCompare(b.countryName))
 
   const router = useRouter()
-
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
