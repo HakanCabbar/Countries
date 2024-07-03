@@ -1,4 +1,3 @@
-'use client'
 import '../styles/globals.css'
 import Layout from 'src/layout'
 import { NextComponentType, NextPageContext } from 'next'
@@ -6,14 +5,12 @@ import { SWRConfig } from 'swr'
 import { swrDefaultValues } from 'src/configs/swr'
 import ThemeComponent from 'src/theme/ThemeComponent'
 import { SettingsConsumer, SettingsProvider } from 'src/context/settingsContext'
-import { Component } from 'react'
 import { AppProps } from 'next/app'
 
 export interface MyAppProps {
   Component: NextComponentType<NextPageContext, any, {}>
   pageProps: any
 }
-
 
 const App = (props: AppProps) => {
   const { Component, pageProps } = props
