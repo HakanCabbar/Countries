@@ -20,7 +20,7 @@ interface CountryCardProps {
 }
 
 const CountryCard = ({ cardData, onClick }: CountryCardProps) => {
-  const { settings, saveSettings } = useSettings()
+  const { settings } = useSettings()
   const theme = useTheme()
   const mode = settings.mode
 
@@ -50,12 +50,12 @@ const CountryCard = ({ cardData, onClick }: CountryCardProps) => {
       }}
       onClick={onClick}
     >
-      <Box sx={{ height: '180px' }}>
+      <Box sx={{ height: '250px' }}>
         {
           <img
             src={flagUrl}
             alt={`${countryName} flag`}
-            style={{ width: '100%', height: '180px', objectFit: 'cover' }}
+            style={{ width: '100%', height: '250px', objectFit: 'cover' }}
           />
         }
       </Box>
