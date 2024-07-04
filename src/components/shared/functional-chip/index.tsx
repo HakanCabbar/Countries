@@ -22,7 +22,8 @@ const FunctionalChip = (props: ChipProps) => {
         alignItems: 'center',
         gap: '1rem',
         width: 'content-fit',
-        cursor:'pointer'
+        cursor:'pointer',
+        textWrap:'nowrap'
       }}
       onClick={props.onClick}
     >

@@ -28,7 +28,7 @@ const CountriesList = () => {
   const { data: regionCountriesData } = useGetCountriesWithFilter({
     filterKey: countryName !== null ? 'name' : 'region',
     filterValue: countryName !== null ? countryName : countryRegion,
-    fields: 'name,population,region,capital,languages,flags,code'
+    fields: 'name,population,region,capital,languages,flags,code,cca2'
   })
 
   const sortedCountryNames = countriesData?.map(country => country.name.common).sort()

@@ -22,8 +22,6 @@ const Geography = () => {
     fields: 'continents,region,subregion,area,population,landlocked,borders,maps'
   })
 
-  console.log(countryData, 'xd')
-
   const geographyData = [
     {
       label: 'Continent',
@@ -51,28 +49,29 @@ const Geography = () => {
     },
     {
       label: 'Border countries',
-      value: countryData?.borders ? (
-        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-          {countryData.borders.map((border, index) => (
-            <FunctionalChip
-              key={index}
-              bgColor='#E6F2FD'
-              textColor='#007BE5'
-              text={border}
-              icon='mi:external-link'
-              onClick={() => router.push(`/country-details?countryCode=${border}`)}
-            />
-          ))}
-        </Box>
-      ) : (
-        'N/A'
-      )
+      value:
+        countryData && countryData?.borders?.length > 0 ? (
+          <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            {countryData.borders.map((border, index) => (
+              <FunctionalChip
+                key={index}
+                bgColor='#E6F2FD'
+                textColor='#007BE5'
+                text={border}
+                icon='mi:external-link'
+                onClick={() => router.push(`/country-details?countryCode=${border}`)}
+              />
+            ))}
+          </Box>
+        ) : (
+          'N/A'
+        )
     },
 
     {
       label: 'Maps',
       value: countryData?.maps ? (
-        <Box sx={{ display: 'flex', gap: '1rem' }}>
+        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           <FunctionalChip
             bgColor='#E6F2FD'
             textColor='#007BE5'
@@ -122,7 +121,7 @@ const Geography = () => {
                 <Chip color={data.value === 'Yes' ? 'green' : 'red'} text={data.value as string} />
               </DetailRow>
             ) : (
-              <DetailRow key={index} label={data.label} value={data.value as any} isLastMember={false} />
+              <DetailRow key={index} label={data.label} value={data.value} isLastMember={false} />
             )}
           </Box>
         ))}

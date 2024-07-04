@@ -64,13 +64,14 @@ const GeneralInformation = () => {
         gap: '1rem'
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
         <Typography sx={{ fontWeight: 800, fontSize: '36px' }}>{generalInformation?.name?.common}</Typography>
         <img
           src={generalInformation?.flags?.svg}
           alt={`${generalInformation?.name?.common} Flag`}
           height={24}
           width={36}
+          style={{marginTop:'8px'}}
         />
       </Box>
       <Typography sx={{ fontWeight: 700, fontSize: '24px' }}>General Information</Typography>

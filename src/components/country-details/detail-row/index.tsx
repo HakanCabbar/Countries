@@ -5,7 +5,7 @@ import { useSettings } from 'src/hooks/useSettings'
 
 interface DetailRowProps {
   label: string
-  value?: string | number
+  value?: string | number | ReactNode
   children?: ReactNode
   isLastMember: boolean
 }
@@ -20,33 +20,38 @@ export const DetailRow = (props: DetailRowProps) => {
         width: '100%',
         borderBottom: !props.isLastMember ? `1px solid ${theme.palette.text.secondary}` : '0px',
         display: 'flex',
-        padding: '1rem'
+        padding: '1rem',
+        gap: '2rem'
       }}
     >
-      <Typography
-        sx={{
-          width: '30%',
-          color: settings.mode === 'light' ? '#17181A' : '#FFFFFF',
-          fontWeight: 700,
-          fontSize: '16px'
-        }}
-      >
-        {props.label}
-      </Typography>
-      {props.value ? (
+      <Box sx={{ width: '30%' }}>
         <Typography
           sx={{
-            width: '70%',
             color: settings.mode === 'light' ? '#17181A' : '#FFFFFF',
-            fontWeight: 400,
+            fontWeight: 700,
             fontSize: '16px'
           }}
         >
-          {props.value}
+          {props.label}
         </Typography>
-      ) : (
-        props.children
-      )}
+      </Box>
+
+      <Box >
+        {props.value ? (
+          <Typography
+            sx={{
+              width: '70%',
+              color: settings.mode === 'light' ? '#17181A' : '#FFFFFF',
+              fontWeight: 400,
+              fontSize: '16px'
+            }}
+          >
+            {props.value}
+          </Typography>
+        ) : (
+          props.children
+        )}
+      </Box>
     </Box>
   )
 }
