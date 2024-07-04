@@ -22,10 +22,6 @@ const Geography = () => {
     fields: 'continents,region,subregion,area,population,landlocked,borders,maps'
   })
 
-  console.log(countryData)
-
-  console.log(countryData, 'xd')
-
   const geographyData = [
     {
       label: 'Continent',
