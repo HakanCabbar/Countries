@@ -4,15 +4,15 @@ import { useTheme } from '@mui/material/styles'
 import { useRouter } from 'next/router'
 import useGetCountryDetails from 'src/services/hooks/useGetCountryDetail'
 
-const Flag = () => {
+const CoatOfArms = () => {
   const router = useRouter()
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
 
-  const { data: flagData } = useGetCountryDetails({
+  const { data: coatOfArmsData } = useGetCountryDetails({
     filterValue: router.query.countryCode as string,
-    fields: 'flags'
+    fields: 'coatOfArms'
   })
 
   return (
@@ -28,8 +28,8 @@ const Flag = () => {
       <Typography sx={{ fontWeight: 700, fontSize: '24px' }}>Flag</Typography>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
         <img
-          src={flagData?.flags.svg}
-          alt={flagData?.flags.alt}
+          src={coatOfArmsData?.coatOfArms.svg}
+          alt={'Coat of Arms'}
           style={{
             width: isSmallScreen ? '100%' : isMediumScreen ? '80%' : '60%',
             height: 'auto'
@@ -40,4 +40,4 @@ const Flag = () => {
   )
 }
 
-export default Flag
+export default CoatOfArms
