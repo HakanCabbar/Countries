@@ -1,5 +1,6 @@
 // ** MUI Imports
 import { Box } from '@mui/material'
+import CoatOfArms from 'src/components/country-details/coat-of-arms'
 import Flag from 'src/components/country-details/flag'
 
 // ** Custom Component Imports
@@ -19,6 +20,7 @@ const CountryDetails = () => {
       <GeneralInformation />
       <Geography />
       <Flag/>
+      <CoatOfArms/>
     </Box>
   )
 }
