@@ -24,8 +24,6 @@ const CountryCard = ({ cardData, onClick }: CountryCardProps) => {
   const theme = useTheme()
   const mode = settings.mode
 
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
   const { countryName, population, region, capital, language, flagUrl } = cardData
 
   const cardDataList = [
@@ -40,12 +38,12 @@ const CountryCard = ({ cardData, onClick }: CountryCardProps) => {
       sx={{
         borderRadius: '8px',
         border: `1px solid ${theme.palette.text.secondary}`,
-        width: isSmallScreen ? '100%' : isMediumScreen ? 'calc(50% - 1rem)' : 'calc(25% - 1rem)',
+        width: '100%',
         boxSizing: 'border-box',
         cursor: 'pointer',
         transition: 'box-shadow 0.3s ease-in-out',
         ':hover': {
-          boxShadow: `4px 4px 20px ${theme.palette.text.secondary}`
+          boxShadow: `5px 5px 20px ${theme.palette.text.secondary}`
         }
       }}
       onClick={onClick}

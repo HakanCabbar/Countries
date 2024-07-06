@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 
 // ** MUI
-import { Box, TextField, Autocomplete, Select, MenuItem, useMediaQuery } from '@mui/material'
+import { Box, TextField, Autocomplete, Select, MenuItem, useMediaQuery, Grid } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 
 // ** Custom Component Imports
@@ -14,6 +14,7 @@ import CountryCard from 'src/components/country-list/country-card'
 // ** Hook Imports
 import useGetCountries from 'src/services/hooks/useGetCountries'
 import useGetCountriesWithFilter from 'src/services/hooks/useGetCountriesWithFilter'
+import NoResults from 'src/components/country-list/no-results'
 
 const CountriesList = () => {
   // ** States
@@ -53,13 +54,11 @@ const CountriesList = () => {
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <Box sx={{ display: 'flex', gap: '2rem', paddingRight: '1rem', flexWrap: isMediumScreen ? 'wrap' : 'nowrap' }}>
         <Autocomplete
-          disablePortal
           options={sortedCountryNames ?? ([] as string[])}
           onChange={(event, value) => setCountryName(value !== '' ? value : null)}
           sx={{ width: isMediumScreen ? '100%' : '80%' }}
           renderInput={params => (
             <TextField
-              onChange={e => setCountryName(e.target.value !== '' ? e.target.value : null)}
               {...params}
               label='Search by Country Name'
             />
@@ -78,15 +77,31 @@ const CountriesList = () => {
         </Select>
       </Box>
 
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-        {manipulatedCountryData?.map(country => (
-          <CountryCard
-            key={country.countryName}
-            cardData={country}
-            onClick={() => router.push(`/country-details?countryCode=${country.code}`)}
-          />
-        ))}
-      </Box>
+      <Grid container spacing={2}>
+        {manipulatedCountryData !== undefined ? (
+          manipulatedCountryData?.map((country, index) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+              <CountryCard
+                key={country.countryName}
+                cardData={country}
+                onClick={() => router.push(`/country-details?countryCode=${country.code}`)}
+              />
+            </Grid>
+          ))
+        ) : (
+          <Box
+            sx={{
+              width: '100%',
+              minHeight: 'calc(100vh - 400px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <NoResults />
+          </Box>
+        )}
+      </Grid>
     </Box>
   )
 }

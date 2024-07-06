@@ -1,10 +1,11 @@
 // ** Next Imports
 import Router from 'next/router'
 
-// ** MUI Imports
+// ** MUI Imports,
+import { useTheme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import { useTheme } from '@mui/material/styles'
+import { useMediaQuery } from '@mui/material'
 
 // ** Custom Component Imports
 import Icon from 'src/components/shared/icon'
@@ -15,6 +16,7 @@ import { useSettings } from 'src/hooks/useSettings'
 const AppBar = () => {
   const { settings, saveSettings } = useSettings()
   const theme = useTheme()
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const toggleMode = () => {
     saveSettings({
@@ -47,12 +49,16 @@ const AppBar = () => {
             fontSize: '24px',
             fontWeight: 700,
             cursor: 'pointer',
-            background: 'transparent'
+            display: 'flex',
+            alignItems: 'center',
+            textWrap: 'nowrap',
+            ':hover': {
+              textShadow: '4px 4px 20px #55B0FF'
+            }
           }}
-          component={'div'}
           onClick={() => Router.push('/country-list')}
         >
-          Where is the world
+          Where Is The World
         </Typography>
         <Box
           sx={{
@@ -61,10 +67,10 @@ const AppBar = () => {
             padding: '0.5rem',
             alignItems: 'center',
             cursor: 'pointer',
-            border: '1px solid transparent',
+            border: '1.5px solid transparent',
             borderRadius: '8px',
             '&:hover': {
-              borderColor: theme.palette.text.primary
+              borderColor: settings.mode === 'light' ? 'black' : '#55B0FF'
             }
           }}
           onClick={toggleMode}
@@ -73,7 +79,11 @@ const AppBar = () => {
             icon={settings.mode === 'light' ? 'material-symbols-light:dark-mode-outline' : 'bitcoin-icons:sun-filled'}
             fontSize={28}
           />
-          <Typography>{settings.mode === 'light' ? 'Dark Mode' : 'Light Mode'}</Typography>
+          {!isSmallScreen && (
+            <Typography sx={{ textWrap: 'nowrap', fontSize: '16px' }}>
+              {settings.mode === 'light' ? 'Dark Mode' : 'Light Mode'}
+            </Typography>
+          )}
         </Box>
       </Box>
     </Box>
