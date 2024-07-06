@@ -1,8 +1,11 @@
-import { Box, Card, Typography } from '@mui/material'
-import React from 'react'
-import { useTheme as useMuiTheme } from '@mui/material/styles'
-import Icon from 'src/icon'
-import { useTheme } from 'src/context/themeContext'
+// ** MUI Imports
+import { Box, Card, Typography, useMediaQuery, useTheme } from '@mui/material'
+
+// ** Custom Component Imports
+import Icon from 'src/components/shared/icon'
+
+// ** Hook Imports
+import { useSettings } from 'src/hooks/useSettings'
 
 interface CountryCardProps {
   cardData: {
@@ -13,11 +16,13 @@ interface CountryCardProps {
     language: string
     flagUrl: string
   }
+  onClick: () => void
 }
 
-const CountryCard = ({ cardData }: CountryCardProps) => {
-  const theme = useMuiTheme()
-  const { mode } = useTheme()
+const CountryCard = ({ cardData, onClick }: CountryCardProps) => {
+  const { settings } = useSettings()
+  const theme = useTheme()
+  const mode = settings.mode
 
   const { countryName, population, region, capital, language, flagUrl } = cardData
 
@@ -31,20 +36,26 @@ const CountryCard = ({ cardData }: CountryCardProps) => {
   return (
     <Card
       sx={{
-        borderColor: theme.palette.text.secondary,
         borderRadius: '8px',
-        border: '1px solid',
-        width: 'calc(25% - 1rem)',
+        border: `1px solid ${theme.palette.text.secondary}`,
+        width: '100%',
         boxSizing: 'border-box',
         cursor: 'pointer',
         transition: 'box-shadow 0.3s ease-in-out',
         ':hover': {
-          boxShadow: `4px 4px 20px ${theme.palette.text.secondary}`
+          boxShadow: `5px 5px 20px ${theme.palette.text.secondary}`
         }
       }}
+      onClick={onClick}
     >
-      <Box sx={{ height: '180px' }}>
-        <img src={flagUrl} alt={`${countryName} flag`} style={{ width: '100%', height: '180px', objectFit: 'cover' }} />
+      <Box sx={{ height: '250px' }}>
+        {
+          <img
+            src={flagUrl}
+            alt={`${countryName} flag`}
+            style={{ width: '100%', height: '250px', objectFit: 'cover' }}
+          />
+        }
       </Box>
       <Box
         sx={{

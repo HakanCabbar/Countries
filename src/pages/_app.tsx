@@ -1,24 +1,34 @@
-'use client'
 import '../styles/globals.css'
-import { Theme, ThemeProvider } from 'src/context/themeContext'
 import Layout from 'src/layout'
 import { NextComponentType, NextPageContext } from 'next'
 import { SWRConfig } from 'swr'
 import { swrDefaultValues } from 'src/configs/swr'
+import ThemeComponent from 'src/theme/ThemeComponent'
+import { SettingsConsumer, SettingsProvider } from 'src/context/settingsContext'
+import { AppProps } from 'next/app'
 
 export interface MyAppProps {
   Component: NextComponentType<NextPageContext, any, {}>
   pageProps: any
 }
 
-const App = ({ Component, pageProps }: MyAppProps) => {
+const App = (props: AppProps) => {
+  const { Component, pageProps } = props
 
   return (
-    <SWRConfig value={swrDefaultValues}>
-      <ThemeProvider>
-        <Layout Component={Component} pageProps={pageProps} />
-      </ThemeProvider>
-    </SWRConfig>
+    <SettingsProvider>
+      <SettingsConsumer>
+        {({ settings }) => {
+          return (
+            <ThemeComponent settings={settings}>
+              <SWRConfig value={swrDefaultValues}>
+                <Layout Component={Component} pageProps={pageProps} />
+              </SWRConfig>
+            </ThemeComponent>
+          )
+        }}
+      </SettingsConsumer>
+    </SettingsProvider>
   )
 }
 

@@ -12,7 +12,7 @@ export default function useGetCountries() {
   }
 
   const { data, mutate, isLoading } = useSWR<CountryData[]>(
-    baseUrl + '/all?fields=population,region,capital,languages,flags,name',
+    baseUrl + '/all?fields=population,region,capital,languages,flags,name,cca2',
     fetcher
   )
 

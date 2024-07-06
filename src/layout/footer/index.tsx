@@ -1,13 +1,12 @@
 // ** MUI Imports
-import { Box, Typography } from '@mui/material'
-import { useTheme as useMuiTheme } from '@mui/material/styles'
+import { Box, Typography, useTheme } from '@mui/material'
 
-// ** Context Imports
-import { useTheme } from 'src/context/themeContext'
+// ** Hook Imports
+import { useSettings } from 'src/hooks/useSettings'
 
 const Footer = () => {
-  const { mode } = useTheme()
-  const theme = useMuiTheme()
+  const { settings } = useSettings()
+  const theme = useTheme()
 
   return (
     <Box
@@ -15,9 +14,10 @@ const Footer = () => {
         position: 'sticky',
         bottom: 0,
         width: '100%',
-        bgcolor: mode === 'light' ? '#FEFEFE' : '#2B3743',
+        bgcolor: settings.mode === 'light' ? '#FEFEFE' : '#2B3743',
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        boxShadow: '0px 4px 16px 0px #0000001A'
       }}
     >
       <Typography

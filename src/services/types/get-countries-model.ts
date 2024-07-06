@@ -1,5 +1,3 @@
-
-
 export interface CountryData {
   flags: {
     png: string
@@ -22,4 +20,5 @@ export interface CountryData {
     [key: string]: string
   }
   population: number
+  cca2:string
 }
