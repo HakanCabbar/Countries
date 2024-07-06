@@ -1,11 +1,17 @@
-import { Box, Typography, useMediaQuery } from '@mui/material'
-import React from 'react'
-import { DetailRow } from '../detail-row'
-import useGetCountryDetails from 'src/services/hooks/useGetCountryDetail'
-import Chip from 'src/components/shared/chip'
-import { useTheme } from '@mui/material/styles'
+// ** Next Imports
 import { useRouter } from 'next/router'
+
+// ** MUI Imports
+import { Box, Typography, useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+
+// ** Custom Component Imports
+import Chip from 'src/components/shared/chip'
+import { DetailRow } from '../detail-row'
+
+// ** Hook Imports
 import { useSettings } from 'src/hooks/useSettings'
+import useGetCountryDetails from 'src/services/hooks/useGetCountryDetail'
 
 const GeneralInformation = () => {
   const router = useRouter()
@@ -48,9 +54,22 @@ const GeneralInformation = () => {
     },
     {
       label: 'Currencies',
-      value: Object.keys(generalInformation?.currencies || {})
-        .map(code => `${generalInformation?.currencies[code]?.name} (${generalInformation?.currencies[code]?.symbol})`)
-        .join(', ')
+      value:
+        generalInformation && generalInformation?.currencies ? (
+          <DetailRow key='currencies' label='Currencies' lastMember>
+            <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              {Object.keys(generalInformation.currencies).map((code, index) => (
+                <Chip
+                  key={index}
+                  color={'blue'}
+                  text={`${generalInformation.currencies[code]?.name} (${generalInformation.currencies[code]?.symbol})`}
+                />
+              ))}
+            </Box>
+          </DetailRow>
+        ) : (
+          'N/A'
+        )
     }
   ]
 
@@ -71,7 +90,7 @@ const GeneralInformation = () => {
           alt={`${generalInformation?.name?.common} Flag`}
           height={24}
           width={36}
-          style={{marginTop:'8px'}}
+          style={{ marginTop: '8px' }}
         />
       </Box>
       <Typography sx={{ fontWeight: 700, fontSize: '24px' }}>General Information</Typography>
@@ -84,12 +103,10 @@ const GeneralInformation = () => {
       >
         {generalInformationData.map((data, index) => (
           <Box key={index}>
-            {index === generalInformationData.length - 1 ? (
-              <DetailRow key={index} label={data.label} isLastMember>
-                <Chip color='blue' text={data.value as string} />
-              </DetailRow>
+            {typeof data.value === 'string' ? (
+              <DetailRow key={index} label={data.label} value={data.value} />
             ) : (
-              <DetailRow key={index} label={data.label} value={data.value} isLastMember={false} />
+              data.value
             )}
           </Box>
         ))}

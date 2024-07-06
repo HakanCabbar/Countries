@@ -1,12 +1,17 @@
-import { Box, Typography, useMediaQuery } from '@mui/material'
-import React from 'react'
-import { DetailRow } from '../detail-row'
-import useGetCountryDetails from 'src/services/hooks/useGetCountryDetail'
-import Chip from 'src/components/shared/chip'
-import { useTheme } from '@mui/material/styles'
+// ** Next Imports
 import { useRouter } from 'next/router'
+
+// ** MUI Imports
+import { Box, Typography, useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+
+// ** Custom Component Imports
+import { DetailRow } from '../detail-row'
+import Chip from 'src/components/shared/chip'
+
+// ** Hook Imports
 import { useSettings } from 'src/hooks/useSettings'
-import FunctionalChip from 'src/components/shared/functional-chip'
+import useGetCountryDetails from 'src/services/hooks/useGetCountryDetail'
 
 const Geography = () => {
   const router = useRouter()
@@ -25,7 +30,7 @@ const Geography = () => {
   const geographyData = [
     {
       label: 'Continent',
-      value: countryData?.continents?.[0]
+      value: countryData?.continents?.join(' ,')
     },
     {
       label: 'Region',
@@ -37,58 +42,61 @@ const Geography = () => {
     },
     {
       label: 'Area',
-      value: countryData?.area
+      value: `${countryData?.area?.toString()} km²`
     },
+
     {
       label: 'Population',
       value: countryData?.population?.toLocaleString()
     },
     {
       label: 'Landlocked',
-      value: countryData?.landlocked ? 'Yes' : 'No'
+      value: (
+        <DetailRow key={'landlocked'} label={'Landlocked'}>
+          <Chip color={countryData?.landlocked ? 'green' : 'red'} text={countryData?.landlocked ? 'Yes' : 'No'} />
+        </DetailRow>
+      )
     },
     {
       label: 'Border countries',
       value:
         countryData && countryData?.borders?.length > 0 ? (
-          <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-            {countryData.borders.map((border, index) => (
-              <FunctionalChip
-                key={index}
-                bgColor='#E6F2FD'
-                textColor='#007BE5'
-                text={border}
-                icon='mi:external-link'
-                onClick={() => router.push(`/country-details?countryCode=${border}`)}
-              />
-            ))}
-          </Box>
+          <DetailRow key={'Border Countries'} label={'Border Countries'}>
+            <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              {countryData.borders.map((border, index) => (
+                <Chip
+                  key={index}
+                  color={'blue'}
+                  text={border}
+                  onClick={() => router.push(`/country-details?countryCode=${border}`)}
+                  icon='mi:external-link'
+                />
+              ))}
+            </Box>
+          </DetailRow>
         ) : (
           'N/A'
         )
     },
-
     {
       label: 'Maps',
-      value: countryData?.maps ? (
-        <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-          <FunctionalChip
-            bgColor='#E6F2FD'
-            textColor='#007BE5'
-            text='Google Maps'
-            icon='mi:external-link'
-            onClick={() => window.open(countryData.maps.googleMaps, '_blank')}
-          />
-          <FunctionalChip
-            bgColor='#E6F2FD'
-            textColor='#007BE5'
-            text='Open Street Maps'
-            icon='mi:external-link'
-            onClick={() => window.open(countryData.maps.openStreetMaps, '_blank')}
-          />
-        </Box>
-      ) : (
-        'N/A'
+      value: (
+        <DetailRow key='maps' label='Maps' lastMember>
+          <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <Chip
+              color={'blue'}
+              text={'Open Street'}
+              onClick={() => window.open(countryData?.maps.openStreetMaps, '_blank')}
+              icon='mi:external-link'
+            />
+            <Chip
+              color={'blue'}
+              text={'Google Maps'}
+              onClick={() => window.open(countryData?.maps.googleMaps, '_blank')}
+              icon='mi:external-link'
+            />
+          </Box>
+        </DetailRow>
       )
     }
   ]
@@ -116,12 +124,10 @@ const Geography = () => {
       >
         {geographyData.map((data, index) => (
           <Box key={index}>
-            {index === geographyData.length - 3 ? (
-              <DetailRow key={index} label={data.label} isLastMember={false}>
-                <Chip color={data.value === 'Yes' ? 'green' : 'red'} text={data.value as string} />
-              </DetailRow>
+            {typeof data.value === 'string' ? (
+              <DetailRow key={index} label={data.label} value={data.value} />
             ) : (
-              <DetailRow key={index} label={data.label} value={data.value} isLastMember={false} />
+              data.value
             )}
           </Box>
         ))}

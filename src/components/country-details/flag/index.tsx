@@ -1,7 +1,11 @@
-import { Box, Typography, useMediaQuery } from '@mui/material'
-import React from 'react'
-import { useTheme } from '@mui/material/styles'
+// ** Next Imports
 import { useRouter } from 'next/router'
+
+// ** MUI Imports
+import { Box, Typography, useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+
+// ** Hook Imports
 import useGetCountryDetails from 'src/services/hooks/useGetCountryDetail'
 
 const Flag = () => {

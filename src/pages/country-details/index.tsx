@@ -1,11 +1,12 @@
 // ** MUI Imports
 import { Box } from '@mui/material'
-import CoatOfArms from 'src/components/country-details/coat-of-arms'
-import Flag from 'src/components/country-details/flag'
 
 // ** Custom Component Imports
 import GeneralInformation from 'src/components/country-details/general-information'
 import Geography from 'src/components/country-details/geography'
+import Flag from 'src/components/country-details/flag'
+import CoatOfArms from 'src/components/country-details/coat-of-arms'
+import Misscellaneous from 'src/components/country-details/misscellaneous'
 
 const CountryDetails = () => {
   return (
@@ -13,14 +14,16 @@ const CountryDetails = () => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        marginX: 'auto',
-        gap: '1rem'
+        justifyContent: 'center',
+        gap: '2rem',
+        width: '100%'
       }}
     >
       <GeneralInformation />
       <Geography />
-      <Flag/>
-      <CoatOfArms/>
+      <Flag />
+      <CoatOfArms />
+      <Misscellaneous />
     </Box>
   )
 }

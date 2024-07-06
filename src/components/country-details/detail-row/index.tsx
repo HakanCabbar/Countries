@@ -1,13 +1,18 @@
+// ** React Imports
+import { ReactNode } from 'react'
+
+// ** MUI Imports
 import { Box, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
-import React, { ReactNode } from 'react'
+
+// ** Hook Imports
 import { useSettings } from 'src/hooks/useSettings'
 
 interface DetailRowProps {
   label: string
   value?: string | number | ReactNode
   children?: ReactNode
-  isLastMember: boolean
+  lastMember?: boolean
 }
 
 export const DetailRow = (props: DetailRowProps) => {
@@ -18,7 +23,7 @@ export const DetailRow = (props: DetailRowProps) => {
     <Box
       sx={{
         width: '100%',
-        borderBottom: !props.isLastMember ? `1px solid ${theme.palette.text.secondary}` : '0px',
+        borderBottom: !props.lastMember ? `1px solid ${theme.palette.text.secondary}` : '0px',
         display: 'flex',
         padding: '1rem',
         gap: '2rem'
@@ -36,11 +41,10 @@ export const DetailRow = (props: DetailRowProps) => {
         </Typography>
       </Box>
 
-      <Box >
+      <Box sx={{ width: '70%' }}>
         {props.value ? (
           <Typography
             sx={{
-              width: '70%',
               color: settings.mode === 'light' ? '#17181A' : '#FFFFFF',
               fontWeight: 400,
               fontSize: '16px'
