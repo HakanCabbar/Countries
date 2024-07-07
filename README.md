@@ -18,7 +18,7 @@ The application supports dark mode to enhance user experience. Furthermore, vari
 
 **Project Link**
 
-https://countries-theta-navy.vercel.app/country-list
+https://countries-nugpmv7mf-hakancabbars-projects.vercel.app/country-list
 
 **Local Setup**
 
