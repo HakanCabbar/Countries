@@ -20,9 +20,11 @@ interface CountryCardProps {
 }
 
 const CountryCard = ({ cardData, onClick }: CountryCardProps) => {
+  // ** Hooks
   const { settings } = useSettings()
   const theme = useTheme()
-  const mode = settings.mode
+
+  // ** Variables
 
   const { countryName, population, region, capital, language, flagUrl } = cardData
 
@@ -73,8 +75,8 @@ const CountryCard = ({ cardData, onClick }: CountryCardProps) => {
           sx={{ paddingX: '1rem', paddingY: '0.5rem', display: 'flex', justifyContent: 'space-between' }}
         >
           <Box sx={{ display: 'flex', gap: '1rem' }}>
-            <Icon icon={data.icon} fontSize={20} color={mode === 'light' ? '#777777' : '#C5C5C5'} />
-            <Typography color={mode === 'light' ? '#777777' : '#C5C5C5'}>{data.text}</Typography>
+            <Icon icon={data.icon} fontSize={20} color={settings.mode === 'light' ? '#777777' : '#C5C5C5'} />
+            <Typography color={settings.mode === 'light' ? '#777777' : '#C5C5C5'}>{data.text}</Typography>
           </Box>
           <Box sx={{ fontSize: '16px', fontWeight: 700 }}>{data.data}</Box>
         </Box>

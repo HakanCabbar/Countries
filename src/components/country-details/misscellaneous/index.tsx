@@ -14,18 +14,19 @@ import { useSettings } from 'src/hooks/useSettings'
 import useGetCountryDetails from 'src/services/hooks/useGetCountryDetail'
 
 const Misscellaneous = () => {
+  // ** Hooks
   const router = useRouter()
   const { settings } = useSettings()
-
   const theme = useTheme()
-
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
-
   const { data: countryData } = useGetCountryDetails({
     filterValue: router.query.countryCode as string,
     fields: 'unMember,independent,timezones,startOfWeek,tld,postalCode'
   })
+
+  // ** Variables
+
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
 
   const geographyData = [
     {
