@@ -14,18 +14,20 @@ import { useSettings } from 'src/hooks/useSettings'
 import useGetCountryDetails from 'src/services/hooks/useGetCountryDetail'
 
 const Geography = () => {
+  // ** Hooks
   const router = useRouter()
   const { settings } = useSettings()
-
   const theme = useTheme()
-
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
 
   const { data: countryData } = useGetCountryDetails({
     filterValue: router.query.countryCode as string,
     fields: 'continents,region,subregion,area,population,landlocked,borders,maps'
   })
+
+  // ** Variables
+
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
 
   const geographyData = [
     {

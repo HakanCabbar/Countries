@@ -14,18 +14,19 @@ import { useSettings } from 'src/hooks/useSettings'
 import useGetCountryDetails from 'src/services/hooks/useGetCountryDetail'
 
 const GeneralInformation = () => {
+  // ** Hooks
   const router = useRouter()
-  const { settings } = useSettings()
-
   const theme = useTheme()
-
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
+  const { settings } = useSettings()
 
   const { data: generalInformation } = useGetCountryDetails({
     filterValue: router.query.countryCode as string,
     fields: 'altSpellings,name,capital,population,languages,currencies,flags'
   })
+
+  // ** Variables
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
 
   const generalInformationData = [
     {

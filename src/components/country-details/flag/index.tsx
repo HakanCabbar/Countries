@@ -9,15 +9,17 @@ import { useTheme } from '@mui/material/styles'
 import useGetCountryDetails from 'src/services/hooks/useGetCountryDetail'
 
 const Flag = () => {
+  // ** Hooks
   const router = useRouter()
   const theme = useTheme()
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
-
   const { data: flagData } = useGetCountryDetails({
     filterValue: router.query.countryCode as string,
     fields: 'flags'
   })
+
+  // ** Variables
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
 
   return (
     <Box

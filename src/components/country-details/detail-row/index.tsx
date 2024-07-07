@@ -16,6 +16,7 @@ interface DetailRowProps {
 }
 
 export const DetailRow = (props: DetailRowProps) => {
+  // ** Hooks
   const { settings } = useSettings()
   const theme = useTheme()
 
