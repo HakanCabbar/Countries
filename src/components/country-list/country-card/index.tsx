@@ -62,13 +62,17 @@ const CountryCard = ({ cardData, onClick }: CountryCardProps) => {
       <Box
         sx={{
           borderBlock: `1px solid ${theme.palette.text.secondary}`,
-          padding: '1rem',
+          padding: '1.5rem',
           fontWeight: 700,
-          fontSize: '24px'
+          fontSize: '1rem',
+          height:'2rem',
+          display: 'flex',
+          alignItems: 'center'
         }}
       >
         {countryName}
       </Box>
+
       {cardDataList.map((data, index) => (
         <Box
           key={index}

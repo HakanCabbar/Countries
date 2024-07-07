@@ -8,6 +8,7 @@ import { useTheme } from '@mui/material/styles'
 // ** Custom Component Imports
 import Chip from 'src/components/shared/chip'
 import { DetailRow } from '../detail-row'
+import Loading from 'src/components/shared/loading'
 
 // ** Hook Imports
 import { useSettings } from 'src/hooks/useSettings'
@@ -19,7 +20,7 @@ const GeneralInformation = () => {
   const theme = useTheme()
   const { settings } = useSettings()
 
-  const { data: generalInformation } = useGetCountryDetails({
+  const { data: generalInformation, isLoading: generalInformationLoading } = useGetCountryDetails({
     filterValue: router.query.countryCode as string,
     fields: 'altSpellings,name,capital,population,languages,currencies,flags'
   })
@@ -57,7 +58,7 @@ const GeneralInformation = () => {
       label: 'Currencies',
       value:
         generalInformation && generalInformation?.currencies ? (
-          <DetailRow key='currencies' label='Currencies' lastMember>
+          <DetailRow label='Currencies' lastMember>
             <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
               {Object.keys(generalInformation.currencies).map((code, index) => (
                 <Chip
@@ -73,6 +74,14 @@ const GeneralInformation = () => {
         )
     }
   ]
+
+  if (generalInformationLoading) {
+    return (
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+        <Loading />
+      </Box>
+    )
+  }
 
   return (
     <Box
@@ -104,11 +113,7 @@ const GeneralInformation = () => {
       >
         {generalInformationData.map((data, index) => (
           <Box key={index}>
-            {typeof data.value === 'string' ? (
-              <DetailRow key={index} label={data.label} value={data.value} />
-            ) : (
-              data.value
-            )}
+            {typeof data.value === 'string' ? <DetailRow label={data.label} value={data.value} /> : data.value}
           </Box>
         ))}
       </Box>
