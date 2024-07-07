@@ -10,30 +10,33 @@ import { useTheme } from '@mui/material/styles'
 
 // ** Custom Component Imports
 import CountryCard from 'src/components/country-list/country-card'
+import NoResults from 'src/components/country-list/no-results'
+import Loading from 'src/components/shared/loading'
 
 // ** Hook Imports
 import useGetCountries from 'src/services/hooks/useGetCountries'
 import useGetCountriesWithFilter from 'src/services/hooks/useGetCountriesWithFilter'
-import NoResults from 'src/components/country-list/no-results'
 
 const CountriesList = () => {
   // ** States
   const [countryRegion, setCountryRegion] = useState('none')
   const [countryName, setCountryName] = useState<string | null>(null)
-  const theme = useTheme()
 
-  const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'))
+  // ** Hooks
+  const theme = useTheme()
+  const router = useRouter()
 
   const { data: countriesData, isLoading: countriesLoading } = useGetCountries()
 
-  const { data: regionCountriesData } = useGetCountriesWithFilter({
+  const { data: regionCountriesData, isLoading: regionCountriesLoading } = useGetCountriesWithFilter({
     filterKey: countryName !== null ? 'name' : 'region',
     filterValue: countryName !== null ? countryName : countryRegion,
     fields: 'name,population,region,capital,languages,flags,code,cca2'
   })
 
+  // ** Variables
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'))
   const sortedCountryNames = countriesData?.map(country => country.name.common).sort()
-
   const manipulatedCountryData = (
     countryRegion !== 'none' || countryName !== null ? regionCountriesData : countriesData
   )
@@ -48,8 +51,6 @@ const CountriesList = () => {
     }))
     .sort((a, b) => a.countryName.localeCompare(b.countryName))
 
-  const router = useRouter()
-
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <Box sx={{ display: 'flex', gap: '2rem', paddingRight: '1rem', flexWrap: isMediumScreen ? 'wrap' : 'nowrap' }}>
@@ -59,6 +60,7 @@ const CountriesList = () => {
           sx={{ width: isMediumScreen ? '100%' : '80%' }}
           renderInput={params => (
             <TextField
+              onChange={e => setCountryName(e.target.value !== '' ? e.target.value : null)}
               {...params}
               label='Search by Country Name'
             />
@@ -78,7 +80,31 @@ const CountriesList = () => {
       </Box>
 
       <Grid container spacing={2}>
-        {manipulatedCountryData !== undefined ? (
+        {countriesLoading || regionCountriesLoading ? (
+          <Box
+            sx={{
+              width: '100%',
+              minHeight: 'calc(100vh - 400px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <Loading />
+          </Box>
+        ) : manipulatedCountryData === undefined ? (
+          <Box
+            sx={{
+              width: '100%',
+              minHeight: 'calc(100vh - 400px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <NoResults />
+          </Box>
+        ) : (
           manipulatedCountryData?.map((country, index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
               <CountryCard
@@ -88,18 +114,6 @@ const CountriesList = () => {
               />
             </Grid>
           ))
-        ) : (
-          <Box
-            sx={{
-              width: '100%',
-              minHeight: 'calc(100vh - 400px)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <NoResults />
-          </Box>
         )}
       </Grid>
     </Box>
