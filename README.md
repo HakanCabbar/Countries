@@ -33,8 +33,7 @@ git clone <repository-url>
 ```
 
 
-2. Navigate to the project directory:
-3. 
+2. Navigate to the project directory: 
 ```
 cd <project-directory>
 ```
